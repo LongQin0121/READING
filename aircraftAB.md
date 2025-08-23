@@ -1,0 +1,29 @@
+B777,787 https://pdfcoffee.com/b777-787-fctm-rev14-pdf-free.html
+
+777/787 Flight Crew Training Manual
+
+Shallow vertical path segments may result in the autothrottle supplying partial thrust to maintain the target speed. Vertical path segments steeper than an idle descent may require the use of speedbrakes for speed control. Deceleration requirements below cruise altitude (such as at 10,000 MSL) are accomplished based on a rate of descent of approximately 500 fpm. When a deceleration is required at top of descent, it is performed in level flight.
+
+Operational factors and/or terminal area requirements may not allow following the optimum descent schedule. Terminal area requirements can be incorporated into basic flight planning but ATC, weather, icing and other traffic may require adjustments to the planned descent schedule. 777-200 - 777-300ER Proper descent planning is necessary to arrive at the desired altitude at the proper speed and configuration. The distance required for the descent is approximately 3 NM/1,000 feet altitude loss for no wind conditions using ECON speed. Rate of descent is dependent upon thrust, drag, airspeed schedule and gross weight. 787-8 - 787-10 Proper descent planning is necessary to arrive at the desired altitude at the proper speed and configuration. The distance required for the descent is approximately 3.5 NM/1,000 feet altitude loss for no wind conditions using ECON speed. Rate of descent is dependent upon thrust, drag, airspeed schedule and gross weight.
+
+
+777/787 Flight Crew Training Manual
+
+Operational factors and/or terminal area requirements may not allow following the optimum descent schedule. Terminal area requirements can be incorporated into basic flight planning but ATC, weather, icing and other traffic may require adjustments to the planned descent schedule. 777-200 - 777-300ER Proper descent planning is necessary to arrive at the desired altitude at the proper speed and configuration. The distance required for the descent is approximately 3 NM/1,000 feet altitude loss for no wind conditions using ECON speed. Rate of descent is dependent upon thrust, drag, airspeed schedule and gross weight. 787-8 - 787-10 Proper descent planning is necessary to arrive at the desired altitude at the proper speed and configuration. The distance required for the descent is approximately 3.5 NM/1,000 feet altitude loss for no wind conditions using ECON speed. Rate of descent is dependent upon thrust, drag, airspeed schedule and gross weight.
+
+
+Economy Climb Economy Climb
+
+The normal economy climb speed schedule of the FMC minimizes trip cost. The FMC generates a fixed speed schedule as a function of cost index and weight. Economy climb speed normally exceeds 250 knots for all gross weights. FMC climb speed is limited to 250 knots below 10,000 feet (FAA airspace), or a lower waypoint speed restriction, if entered. If the use of a higher speed below 10,000 feet is allowed, ECON speed provides additional cost savings.
+
+Economy Climb Schedule - FMC Data Unavailable Economy Climb Schedule - FMC Data Unavailable
+
+• 250 knots/VREF 30 + 80 knots, whichever is higher- Below 10,000 feet
+
+777-200 - 777-300ER • 310 knots/0.84M - Above 10,000 feet 787-8 • 320 knots/0.85M - Above 10,000 feet 787-9, 787-10 • 330 knots/0.85M - Above 10,000 feet
+
+Maximum Rate Climb Maximum Rate Climb
+
+A maximum rate climb provides both high climb rates and minimum time to cruise altitude. Maximum rate climb can be approximated by using the following: 777-200 - 777-300ER • flaps up maneuver speed + 60 knots until intercepting 0.82M 787-8 • VREF 30 + 140 knots until intercepting 0.82M
+
+Boeing Proprietary. Copyright © Boeing. May be subject to export restrictions under EAR. See title page for details.
