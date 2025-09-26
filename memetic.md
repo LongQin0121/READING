@@ -1,3 +1,5 @@
+
+
 Memetic Algorithms（模因算法，简称 MAs）是一类结合了 进化算法（Evolutionary Algorithms, EAs） 和 局部搜索（Local Search） 的优化方法。
 
 👉 可以理解为：
@@ -115,7 +117,8 @@ MA 可以作为超参搜索策略。
 
 局部搜索策略
 1. 简单爬山法（Hill Climbing）
-```   python
+   
+```python
 当前解 → 检查邻域 → 选择最佳邻居 → 重复
 ```
 
@@ -210,6 +213,8 @@ def adaptive_frequency(generation, diversity, improvement):
 
 自适应机制包括：
 
+后半部分 → “Memetic Algorithms and an Idle-Descent i4DFMS” 同时突出算法创新和实验平台。
+
 基于多样性： 种群相似度高时增加搜索
 基于改进程度： 停滞时加强局部优化
 基于代数： 早期少搜索（探索），后期多搜索（开发）
@@ -220,3 +225,61 @@ def adaptive_frequency(generation, diversity, improvement):
 时间充足： 复杂启发式 + 每代执行
 时间紧张： 爬山法 + 选择性执行
 平衡方案： 模拟退火 + 自适应频率
+
+
+
+Memetic Algorithms（算法创新点）
+
+Dynamic Routing for CDO（研究目标）
+
+Simulation with i4DFMS (Idle Descent + RTA)（实验环境）
+
+但目前的题目有点小长，可以稍微润色一下，让它更学术化、顺畅：
+
+优化后的几个版本：
+
+"Memetic Algorithms for Dynamic Routing in Continuous Descent Operations: Simulation with an Idle-Descent i4DFMS under RTA Constraints"
+
+"Dynamic Routing for Continuous Descent Operations Using Memetic Algorithms: A Simulation Study with Idle-Descent i4DFMS and RTA"
+
+"Simulation-Based Evaluation of Memetic Algorithms for Dynamic Routing in Continuous Descent Operations with RTA Constraints"
+
+"Memetic Algorithm-Based Dynamic Routing for Continuous Descent Operations: Integrating Idle Descent and RTA in an i4DFMS Simulation"
+
+"Optimizing Continuous Descent Operations with Memetic Algorithms: Dynamic Routing under RTA Constraints in an i4DFMS Simulation"
+
+👉 这些标题里：
+
+Memetic Algorithms 放在最前，凸显创新点。
+
+Dynamic Routing + CDO 是研究主题。
+
+i4DFMS + Idle Descent + RTA 出现在后半部分，明确实验环境。
+
+偏工程应用风格（航空/航管类会议、期刊适合）
+
+"Memetic Algorithms for Dynamic Routing in Continuous Descent Operations: Simulation with Idle-Descent i4DFMS under RTA Constraints"
+👉 听起来像是一个针对 航管/CDO 的应用研究，突出“仿真验证 + 工程价值”。
+
+偏算法/计算机科学风格（优化、智能算法类会议、期刊适合）
+
+后半部分 → “Memetic Algorithms and an Idle-Descent i4DFMS” 同时突出算法创新和实验平台。
+
+"A Memetic Algorithm Framework for Dynamic Routing in Continuous Descent Operations under RTA Constraints"
+👉 这里弱化了 FMS，只提 Framework，重点是 算法设计 + 优化问题，更贴近 CS/OR 领域。
+
+👌那我给你一个 折中风格 的标题，既能凸显 算法创新，又保留 航空应用场景，这样无论是投航空类期刊还是算法/优化类会议
+
+后半部分 → “Memetic Algorithms and an Idle-Descent i4DFMS” 同时突出算法创新和实验平台。都比较合适：
+
+"Dynamic Routing in Continuous Descent Operations under RTA Constraints: A Simulation Study with Memetic Algorithms and an Idle-Descent i4DFMS"
+
+
+后半部分 → “Memetic Algorithms and an Idle-Descent i4DFMS” 同时突出算法创新和实验平台。
+这样结构上：
+
+前半部分 → “Dynamic Routing in CDO under RTA Constraints” 明确应用场景。
+
+中间 → “Simulation Study” 表明这是实验/验证性质。
+
+后半部分 → “Memetic Algorithms and an Idle-Descent i4DFMS” 同时突出算法创新和实验平台。
