@@ -162,7 +162,7 @@ MA 可以作为超参搜索策略。
 局部搜索频率
 1. 每代都做（Intensive Learning）
 ```python
-pythonfor generation in range(max_gen):
+for generation in range(max_gen):
     # 遗传操作
     offspring = crossover_mutation(population)
     # 每个个体都局部搜索
@@ -177,7 +177,7 @@ pythonfor generation in range(max_gen):
 1. 选择性执行
    
  ```python  
-python# 方案A：只对最佳个体局部搜索
+# 方案A：只对最佳个体局部搜索
 best_individuals = select_best(population, k=5)
 for ind in best_individuals:
     ind = local_search(ind)
@@ -199,7 +199,7 @@ for ind in selected:
 
 3. 自适应频率
 ```python
-pythondef adaptive_frequency(generation, diversity, improvement):
+def adaptive_frequency(generation, diversity, improvement):
     if diversity < threshold_low:
         return 0.8  # 多样性低，增加局部搜索
     elif improvement < threshold_improvement:
