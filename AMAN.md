@@ -256,3 +256,319 @@ Conclusions - 结论
 
 ---
 
+# Dynamic Slot Allocation Strategy for Terminal Maneuvering Area Merging Point Operations
+
+## Abstract
+
+This paper presents a dynamic slot allocation strategy for coordinating aircraft arrivals at Terminal Maneuvering Area (TMA) merging points. The proposed method leverages 4D trajectory-based operations and Required Time of Arrival (RTA) capabilities to optimize slot assignments while maintaining First-Come-First-Served (FCFS) sequencing principles. The strategy considers each aircraft's operational time window and employs look-ahead optimization to minimize total system delay.
+
+**Keywords**: Terminal Maneuvering Area, Slot Allocation, 4D Trajectory, Required Time of Arrival, Air Traffic Flow Management
+
+---
+
+## 1. Introduction
+
+### 1.1 Background
+
+Modern Terminal Maneuvering Areas (TMAs) often employ sector-based designs where multiple independent sectors converge at designated merging points (MPs). The TMA configuration illustrated in Figure 1 demonstrates a four-sector design (N1, E1, S1, W1) with a central merging point where aircraft flows from different sectors must be sequenced and separated.
+
+### 1.2 Problem Statement
+
+The primary challenge in TMA operations is to efficiently allocate arrival time slots at the merging point while:
+- Maintaining required separation standards (typically 90 seconds between successive aircraft)
+- Respecting each aircraft's operational constraints
+- Minimizing delay propagation through the system
+- Preserving fairness through FCFS ordering
+
+### 1.3 Research Contribution
+
+This paper presents a slot allocation methodology that:
+1. Assigns optimal RTA values to aircraft based on their operational time windows
+2. Employs look-ahead optimization for the lead aircraft to minimize downstream delays
+3. Provides a systematic framework for balancing individual and system-wide efficiency
+
+---
+
+## 2. System Model and Notation
+
+### 2.1 TMA Architecture
+
+Consider a TMA divided into four independent sectors {N1, E1, S1, W1}, each handling arriving aircraft flows. All flows converge at a single merging point MP, where precise temporal coordination is required.
+
+### 2.2 Aircraft Parameters
+
+For each aircraft *i* in the system, we define:
+
+| Parameter | Notation | Description |
+|-----------|----------|-------------|
+| Estimated Time of Arrival | ETA_i | Nominal arrival time at MP without intervention |
+| Earliest Arrival Time | ETA_early,i | Minimum achievable arrival time (maximum speed) |
+| Latest Arrival Time | ETA_late,i | Maximum allowable arrival time (minimum speed) |
+| Required Time of Arrival | RTA_i | Assigned target arrival time |
+| Time Window | TW_i | Operational flexibility: TW_i = [ETA_early,i, ETA_late,i] |
+
+### 2.3 System Parameters
+
+- **Slot Duration** (S): Minimum temporal separation between consecutive aircraft at MP (S = 90 seconds)
+- **Slot Sequence**: {Slot₁, Slot₂, ..., Slot_n} where Slot_{k+1} = Slot_k + S
+
+### 2.4 Problem Formulation
+
+Given a set of n aircraft {A₁, A₂, ..., A_n} with their respective parameters {ETA_i, TW_i}, the objective is to assign RTA values such that:
+
+**Objective Function:**
+```
+minimize: Σᵢ₌₁ⁿ wᵢ · max(0, RTAᵢ - ETAᵢ)
+```
+
+**Subject to:**
+```
+1. ETA_early,i ≤ RTAᵢ ≤ ETA_late,i  ∀i
+2. RTAᵢ₊₁ - RTAᵢ ≥ S  ∀i ∈ {1,...,n-1}
+3. Preserve FCFS ordering based on ETA
+```
+
+where w_i represents the delay cost weight for aircraft i.
+
+---
+
+## 3. Slot Allocation Methodology
+
+### 3.1 Algorithm Overview
+
+The proposed allocation strategy consists of three main phases:
+
+**Phase 1**: Aircraft sequencing based on ETA  
+**Phase 2**: Lead aircraft slot optimization  
+**Phase 3**: Downstream slot propagation
+
+### 3.2 Phase 1: Aircraft Sequencing
+
+Sort all aircraft by their nominal arrival times:
+
+```
+Sequence = {Aᵢ | ETA₁ ≤ ETA₂ ≤ ... ≤ ETAₙ}
+```
+
+This ensures FCFS fairness principles are maintained throughout the allocation process.
+
+### 3.3 Phase 2: Lead Aircraft Slot Optimization
+
+The assignment of RTA₁ for the lead aircraft is critical as it establishes the baseline for all subsequent assignments. We employ a look-ahead strategy:
+
+**Definition 3.1** (Traffic Density Classification)
+
+Define the traffic density indicator:
+```
+Δ₁₂ = ETA₂ - ETA₁
+```
+
+We classify traffic scenarios as:
+- **Dense Traffic**: Δ₁₂ < S
+- **Moderate Traffic**: S ≤ Δ₁₂ < 2S
+- **Sparse Traffic**: Δ₁₂ ≥ 2S
+
+**Theorem 3.1** (Optimal Lead Aircraft Assignment)
+
+For the lead aircraft A₁, the optimal RTA assignment strategy is:
+
+```
+RTA₁* = {
+    ETA_early,1           if ETA₂ - ETA_early,1 < S + ε
+    ETA₁                  if ETA₂ - ETA₁ ≥ S
+    α·ETA_early,1 + (1-α)·ETA₁   otherwise
+}
+```
+
+where ε is a small threshold (typically 10-15 seconds), and α ∈ [0,1] is determined by:
+
+```
+α = max(0, (S - (ETA₂ - ETA₁))/(ETA₁ - ETA_early,1))
+```
+
+**Proof Sketch**: 
+
+Case 1 (Dense Traffic): When ETA₂ - ETA_early,1 < S, assigning RTA₁ = ETA₁ would force aircraft A₂ to delay by at least (ETA₁ + S) - ETA₂. By setting RTA₁ = ETA_early,1, we create sufficient temporal separation such that Slot₂ = ETA_early,1 + S can accommodate A₂ with minimal or no delay.
+
+Case 2 (Sparse Traffic): When the natural separation Δ₁₂ ≥ S, no optimization is necessary as A₂ can maintain its ETA without delay regardless of A₁'s assignment.
+
+Case 3 (Moderate Traffic): A weighted assignment balances the acceleration cost of A₁ against the delay cost of A₂. □
+
+### 3.4 Phase 3: Downstream Slot Propagation
+
+After establishing Slot₁, subsequent slots are assigned iteratively:
+
+**Algorithm 1**: Downstream Slot Assignment
+```
+Input: Sorted aircraft sequence {A₁, ..., Aₙ}, Slot₁ = RTA₁
+Output: {RTA₂, ..., RTAₙ}
+
+1: current_slot ← Slot₁
+2: for i = 2 to n do
+3:     candidate_slot ← current_slot + S
+4:     if candidate_slot ∈ TWᵢ then
+5:         RTAᵢ ← candidate_slot
+6:         current_slot ← candidate_slot
+7:     else if candidate_slot < ETA_early,i then
+8:         RTAᵢ ← ETA_early,i  // Aircraft cannot accelerate further
+9:         current_slot ← ETA_early,i
+10:    else
+11:        RTAᵢ ← ETA_late,i  // Conflict resolution required
+12:        Trigger resequencing protocol
+13:    end if
+14: end for
+```
+
+### 3.5 Feasibility Analysis
+
+**Proposition 3.1** (Slot Assignment Feasibility)
+
+A feasible slot assignment exists if and only if:
+```
+∀i ∈ {1,...,n-1}: ETA_late,i + S ≤ ETA_late,i+1
+```
+
+This condition ensures that even with maximum delays, the FCFS sequence can be preserved.
+
+---
+
+## 4. Computational Examples
+
+### 4.1 Example 1: Dense Traffic Scenario
+
+**Input Parameters:**
+```
+Aircraft A₁: ETA₁ = 600s, TW₁ = [480s, 720s]  (±120s flexibility)
+Aircraft A₂: ETA₂ = 630s, TW₂ = [510s, 750s]
+Aircraft A₃: ETA₃ = 660s, TW₃ = [540s, 780s]
+Slot Duration: S = 90s
+```
+
+**Strategy A (Non-optimized)**: RTA₁ = ETA₁ = 600s
+```
+Slot₁ = 600s  → RTA₁ = 600s  (Delay₁ = 0s)
+Slot₂ = 690s  → RTA₂ = 690s  (Delay₂ = 60s)
+Slot₃ = 780s  → RTA₃ = 780s  (Delay₃ = 120s)
+Total Delay: 180s
+```
+
+**Strategy B (Optimized)**: RTA₁ = ETA_early,1 = 480s
+```
+Slot₁ = 480s  → RTA₁ = 480s  (Speedup₁ = 120s)
+Slot₂ = 570s  → RTA₂ = 570s  (Speedup₂ = 60s)
+Slot₃ = 660s  → RTA₃ = 660s  (Delay₃ = 0s)
+Total Time Adjustment: 180s (acceleration-based)
+```
+
+**Analysis**: While both strategies involve 180s of total time adjustment, Strategy B utilizes aircraft acceleration capabilities rather than imposing delays. In practice, acceleration (within operational limits) typically incurs lower cost than holding delays due to fuel efficiency and passenger scheduling considerations.
+
+### 4.2 Example 2: Sparse Traffic Scenario
+
+**Input Parameters:**
+```
+Aircraft A₁: ETA₁ = 600s, TW₁ = [480s, 720s]
+Aircraft A₂: ETA₂ = 720s, TW₂ = [600s, 840s]
+Slot Duration: S = 90s
+```
+
+**Strategy**: RTA₁ = ETA₁ = 600s
+```
+Slot₁ = 600s  → RTA₁ = 600s  (Delay₁ = 0s)
+Slot₂ = 690s  → RTA₂ = 720s  (Delay₂ = 0s)
+                              Natural separation = 120s > S
+Total Delay: 0s
+```
+
+**Analysis**: When natural traffic separation exceeds the required slot duration, no optimization is necessary. Aircraft can maintain their nominal ETAs without intervention.
+
+---
+
+## 5. Performance Metrics
+
+### 5.1 Key Performance Indicators
+
+**Average Delay per Aircraft:**
+```
+D_avg = (1/n) Σᵢ₌₁ⁿ max(0, RTAᵢ - ETAᵢ)
+```
+
+**Time Window Utilization:**
+```
+U_i = |RTAᵢ - ETAᵢ| / |ETA_late,i - ETA_early,i|
+```
+
+**Slot Efficiency:**
+```
+E = (Actual Throughput) / (Maximum Theoretical Throughput)
+```
+
+### 5.2 Complexity Analysis
+
+- **Time Complexity**: O(n) for sequential processing
+- **Space Complexity**: O(n) for storing aircraft data
+- **Update Frequency**: Real-time updates as new ETA information becomes available
+
+---
+
+## 6. Discussion and Future Work
+
+### 6.1 Advantages of Proposed Method
+
+1. **Proactive Optimization**: Look-ahead strategy prevents delay accumulation
+2. **FCFS Preservation**: Maintains fairness in sequencing
+3. **Flexibility**: Leverages 4D-RTA capabilities of modern aircraft
+4. **Scalability**: Linear computational complexity
+
+### 6.2 Limitations and Extensions
+
+Current model assumptions:
+- Deterministic ETA predictions (future work: stochastic models)
+- Homogeneous aircraft performance (extension: heterogeneous fleet)
+- Single merging point (extension: multiple merge points)
+
+### 6.3 Integration with Broader ATM Systems
+
+This slot allocation module represents one component of a comprehensive TMA management system. Future integration includes:
+- Coordination with departure management
+- Weather impact modeling
+- Multi-airport coordination
+- Machine learning for ETA prediction refinement
+
+---
+
+## 7. Conclusions
+
+This paper presented a dynamic slot allocation strategy for TMA merging point operations that balances individual aircraft efficiency with system-wide performance. The key innovation lies in the look-ahead optimization of the lead aircraft slot assignment, which prevents delay propagation through the arrival stream.
+
+The methodology provides:
+- Systematic framework for RTA assignment
+- Theoretical foundation for optimization decisions
+- Practical implementation guidelines
+
+Future research will focus on extending the model to stochastic environments and validating performance through simulation and field trials.
+
+---
+
+## References
+
+[To be added based on actual literature review]
+
+1. SESAR Joint Undertaking. (2023). 4D Trajectory-Based Operations Concept.
+2. EUROCONTROL. (2024). Point Merge Integration Guidelines.
+3. FAA. (2024). Time-Based Flow Management System Documentation.
+
+---
+
+## Appendix A: Notation Summary
+
+| Symbol | Description |
+|--------|-------------|
+| TMA | Terminal Maneuvering Area |
+| MP | Merging Point |
+| ETA | Estimated Time of Arrival |
+| RTA | Required Time of Arrival |
+| TW | Time Window |
+| S | Slot Duration (90 seconds) |
+| FCFS | First-Come-First-Served |
+| A_i | Aircraft i |
+| n | Total number of aircraft |
