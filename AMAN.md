@@ -225,3 +225,34 @@ Slot₂ = 10:01:30 → RTA₂ = 10:02:00 (延误：0秒，自然间隔>90s)
 - Point Merge System
 - 4D Trajectory-Based Operations (TBO)
 - Arrival Manager (AMAN) systems
+
+# 我已经将内容改写成英文学术论文格式，包含：
+主要章节：
+
+Abstract - 摘要，概述研究内容
+Introduction - 背景、问题陈述和研究贡献
+System Model and Notation - 系统建模和符号定义
+Slot Allocation Methodology - 核心方法论
+
+Phase 1: 飞机排序
+Phase 2: 首架飞机优化（重点）
+Phase 3: 后续飞机分配
+
+
+Computational Examples - 计算示例（密集流 vs 稀疏流）
+Performance Metrics - 性能指标
+Discussion and Future Work - 讨论和未来工作
+Conclusions - 结论
+
+学术特点：
+
+✅ 使用定理、证明、算法等学术格式
+✅ 严格的数学符号和公式
+✅ 详细的问题建模
+✅ 复杂度分析
+✅ 完整的文献引用框架
+
+这是论文的"Slot Allocation"部分，可以作为独立章节或者整篇论文的核心方法部分。
+
+---
+
